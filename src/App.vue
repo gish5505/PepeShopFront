@@ -1,49 +1,74 @@
 <template>
-  <div id="app"  class="container-fluid">
-
-<nav class="navbar navbar-dark bg-dark navbar-expand-sm">
-  <ul class="navbar-nav">
-    <a class="navbar-brand" href="#"></a>
-    <img src="@/assets/img/pepe.png" width="50" height="50" alt="">
-    <li class="nav-item">
-      <router-link class="nav-link" to="/loginForm">Login</router-link>
-    </li>
-    <li class="nav-item">
-      <router-link class="nav-link" to="/about">About</router-link><span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
-    </li>
-    <li class="nav-item">
-      <router-link class="nav-link" to="/loggedOn">Profile</router-link>
-    </li>
-  </ul>
-  
-</nav>
-
-     <router-view v-if="isLoggedIn" /><!-- entry point for page content -->
-     <LoginForm v-else @LoginForm::loginResult = "handleLoginResult" />
-
-  </div>
+<div id="app"  class="container-fluid">
+  <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+    <ul class="navbar-nav">
+      <a class="navbar-brand" href="#"></a>
+      <img src="@/assets/img/pepe.png" width="50" height="50" alt="">
+      <!--<li class="nav-item">
+        <router-link class="nav-link" to="/loginForm">Login</router-link>
+      </li>-->
+        <li class="nav-item">
+          <router-link class="nav-link" v-if="authenticated && role == 'Manager'" to="/products">Каталог</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" v-if="authenticated && role == 'Customer'" to="/orders">Заказы</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link class="nav-link" v-if="authenticated && role == 'Admin'" to="/users">Пользователи</router-link>
+        </li>            
+        <li class="nav-item">
+          <router-link class="nav-link .text-right" v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Выход</router-link>
+        </li>
+    </ul>
+    
+  </nav>
+  <router-view v-on:authenticated="setAuthenticated" /><!-- entry point for page content -->     
+</div>
 </template>
 
 
 <script>
-import LoginForm from './components/LoginForm'
-
 export default {
-  components: {LoginForm},
+  name: 'App',
   data(){
     return{
-      userIsLoggedIn: false
+      authenticated: false,
+      role: undefined,
+      user_id: undefined,
+      defaultAccount: {
+        username: "admin",
+        password: "admin",
+        role: "admin"
+      }
     }
   },
-  computed:{
-    isLoggedIn(){
-      return this.userIsLoggedIn
-    }
-  },
+  // mounted() {
+  //           if(!this.authenticated) {
+  //               this.$router.replace({ name: "login" });
+  //           }
+  //       },
   methods:{
-    handleLoginResult({loginResult}) {
-      this.userIsLoggedIn = loginResult
-    }
+            setAuthenticated(auth_result) {
+              this.authenticated = auth_result.authenticated;
+              this.role = auth_result.role;
+              this.user_id = auth_result.user_id;
+
+              switch (this.role)
+              {
+                case "Admin":
+                    this.$router.replace({ name: "users" });
+                    break;
+                case "Manager":
+                    this.$router.replace({ name: "products" });
+                    break;
+                case "Customer":
+                    this.$router.replace({ name: "orders" });
+                    break;
+              }
+            },
+            logout() {
+                this.authenticated = false;
+            }
   }
 }
 </script>

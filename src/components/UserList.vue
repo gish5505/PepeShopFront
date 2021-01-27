@@ -6,7 +6,7 @@
         <button class="btn btn-primary" @click="openModal" data-toggle="modal" data-target="#AddProductModal">Add product</button>
         -->
     </div>
-    <div class="row bg-primary">
+    <div id="tableHead" class="row">
 				<div class="col-md-2">
                     Имя
 				</div>
@@ -17,7 +17,7 @@
                     Код
 				</div>                  
 	</div>    
-    <div class="row" v-for="user in users" :key="user.id">
+    <div id="tableContent" class="row" v-for="user in users" :key="user.id">
 				<div class="col-md-2">
                     {{user.name}}
 				</div>
@@ -45,7 +45,7 @@ export default {
         methods: {
             getUsers() {            
                 this.$http
-                    .get("users")
+                    .get("api/users")
                     .then((response) => { this.users = response.data; })
                     .catch(err => { alert(err); })
                     ;
@@ -53,3 +53,20 @@ export default {
         }
 }
 </script>
+
+<style scoped>
+    #tableHead{
+        /* width: 500px; */
+        /* border: 1px solid red; */
+        background-color: #f2f2f2;
+        margin: auto;
+        /* margin-top: 200px; */
+        padding: 1px;        
+    }
+
+    #tableContent {
+        background-color: #ddd;
+        margin: auto;
+        padding: 1px;
+    }
+</style>

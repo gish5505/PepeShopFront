@@ -3,9 +3,9 @@
     <div class="row" >
         <add-product-modal ref="AddProductModal" @refresh ="getProducts()" />
         <edit-product-modal ref="EditProductModal" @refresh ="getProducts()"/>
-        <button class="btn btn-primary" @click="openModal" data-toggle="modal" data-target="#AddProductModal">Add product</button>
+        <button id="buttonAddProduct" class="btn btn-dark" @click="openModal" data-toggle="modal" data-target="#AddProductModal">Add product</button>
     </div>
-    <div class="row bg-primary">
+    <div id="tableHead" class="row">
 				<div class="col-md-2">
                     Имя товара
 				</div>
@@ -22,7 +22,7 @@
                   &nbsp;
         </div>
 	</div>    
-    <div class="row" v-for="product in products" :key="product.id">
+    <div id="tableContent" class="row" v-for="product in products" :key="product.id">
 				<div class="col-md-2">
                     {{product.name}}
 				</div>
@@ -78,5 +78,28 @@ export default {
       this.getProducts();
   },
 }
-
 </script>
+
+<style scoped>
+    #tableHead{
+        /* width: 500px; */
+        /* border: 1px solid red; */
+        background-color: #f2f2f2;
+        margin: auto;
+        /* margin-top: 200px; */
+        padding: 10px;        
+    }
+
+    #tableContent {
+        background-color: #ddd;
+        margin: auto;
+        padding: 3px;
+    }
+
+    #buttonAddProduct{
+      margin-top: 20px;
+      margin-left: 20px;
+      margin-bottom: 10px;
+      padding: 3px;
+    }
+</style>

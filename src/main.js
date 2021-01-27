@@ -17,10 +17,6 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
   baseURL: "http://localhost:5000/"
 });
-const token = localStorage.getItem('userRole')
-  if (token) {
-    Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-  }
 
 new Vue({
   router,

@@ -1,5 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import LoginComponent from "../components/LoginForm.vue"
+import ProductList from "../components/ProductList.vue"
+import UserList from "../components/UserList.vue"
+import OrderList from "../components/OrderList.vue"
 //import store from '../components/Store/GlobalStore.js'
 
 Vue.use(VueRouter)
@@ -7,38 +11,28 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/catalogueEdit'
+    redirect: {name: "login"}
 
   },
   {
-    path: '/loginform',
-    name: 'LoginForm',
-    component: () => import('../components/LoginForm.vue'),
+    path: "/login",
+    name: "login",
+    component: LoginComponent,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/products",
+    name: "products",
+    component: ProductList
   },
   {
-    path: '/loggedOn',
-    name: 'LoggedIn',
-    component: () => import('../components/HomePage.vue'),
-    //meta: {requiresAuth: false}
+    path: "/users",
+    name: "users",
+    component: UserList
   },
   {
-    path: '/loginFailed',
-    name: 'LoginFail',
-    component: () => import('../components/LoginFailed.vue')
-  },
-  {
-   path: '/catalogueEdit',
-   name: 'CatalogueEdit',
-   component: () => import('../components/CatalogueEdit.vue'),
-   //meta: {requiresAuth: true}
+    path: "/orders",
+    name: "orders",
+    component: OrderList
   }
 ]
 

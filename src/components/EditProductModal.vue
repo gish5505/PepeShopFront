@@ -37,8 +37,9 @@
 
                 <div class="modal-footer">
                     <div class="bnt-group">
-                        <button type="button" class="btn btn-success" @click="editProductPush()" data-dismiss="modal">Сохранить</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-dark" @click="editProductPush()" data-dismiss="modal">Сохранить</button>
+                        &nbsp;
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
             </div>
